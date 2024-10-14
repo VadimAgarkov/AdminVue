@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div>
+    <h1>Welcome to Admin panel</h1>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+<script lang="ts" setup>
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 
-export default defineComponent({
-  name: "HomeView",
-  components: {
-    HelloWorld,
-  },
+const router = useRouter();
+
+onMounted(() => {
+  const isAuthenticated = localStorage.getItem("adminLoggedIn") === "true";
+
+  if (!isAuthenticated) {
+    router.push({ name: "Login" }); // Если не авторизован, -> логин
+  } else {
+    router.push({ name: "Data Statistic" }); // Если авторизован, -> дашборд
+  }
 });
 </script>
